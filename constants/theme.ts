@@ -1,3 +1,5 @@
+// @/constants/theme.ts
+
 export const COLORS = {
     // Brand
     primary: '#FFD700',
@@ -32,19 +34,19 @@ export const COLORS = {
     yellowText: '#0C0C0C',
     yellowIcon: '#0C0C0C',
 
-    // Button Text — Always Black
+    // Button Text — Always Dark (#0C0C0C) on #FFD700
     buttonText: '#0C0C0C',
     buttonTextPrimary: '#0C0C0C',
-    buttonTextSecondary: '#0C0C0C',
+    buttonTextSecondary: '#FFFFFF', // White text on Red background CTAs
     buttonTextYellow: '#0C0C0C',
-    buttonTextRed: '#0C0C0C',
+    buttonTextRed: '#FFFFFF',
 
     // Text on Brand Colors
     textOnHighlight: '#0C0C0C',
     textOnGold: '#0C0C0C',
     textOnPrimary: '#0C0C0C',
-    textOnSecondary: '#0C0C0C',
-    textOnDark: '#0C0C0C',
+    textOnSecondary: '#FFFFFF',
+    textOnDark: '#FFFFFF',
 
     // Icons
     icon: '#0C0C0C',
@@ -54,11 +56,11 @@ export const COLORS = {
 
     // Icons on Brand Colors
     iconOnPrimary: '#0C0C0C',
-    iconOnSecondary: '#0C0C0C',
+    iconOnSecondary: '#FFFFFF',
     iconOnYellow: '#0C0C0C',
-    iconOnRed: '#0C0C0C',
+    iconOnRed: '#FFFFFF',
     iconOnWhite: '#0C0C0C',
-    iconOnDark: '#0C0C0C',
+    iconOnDark: '#FFFFFF',
 
     // Borders
     border: '#CCCCCC',
@@ -85,10 +87,9 @@ export const COLORS = {
 export const FONTS = {
     fontFamily: {
         heading: 'var(--font-outfit), sans-serif',
-        body: 'var(--font-lexend), sans-serif',
+        body: 'var(--font-outfit), sans-serif', // STRICT: Outfit font used globally for headings & body
     },
     weights: {
-        light: '400',
         regular: '400',
         medium: '500',
         semibold: '600',
@@ -104,25 +105,28 @@ export const SPACING = {
     xl: '28px',
 } as const;
 
+// STRICT REQUIREMENT: All non-zero structural radius tokens use rounded-md (0.375rem / 6px)
+export const GLOBAL_RADIUS = 'rounded-md';
+
 export const RADIUS = {
     none: '0px',
-    button: '0px', // Strict Requirement: Zero rounded corners on buttons
-    sm: '4px',
-    md: '8px',
-    lg: '10px',
-    xl: '12px',
-    card: '16px', // Standard 16px for card containers
-    xxl: '16px',
-    round: '9999px',
+    button: '0.375rem',  // rounded-md
+    sm: '0.375rem',      // rounded-md
+    md: '0.375rem',      // rounded-md
+    lg: '0.375rem',      // rounded-md
+    xl: '0.375rem',      // rounded-md
+    card: '0.375rem',    // rounded-md (Replaces 16px)
+    xxl: '0.375rem',     // rounded-md
+    round: '0.375rem',    // rounded-md (Replaces pill 9999px)
 
-    // Logo Continuous Curvature Squircle Profiles
-    squircleSm: '10%',
-    squircleMd: '14%',
-    squircleLg: '18%',
+    // Continuous Curvature Squircles mapped to standard rounded-md
+    squircleSm: '0.375rem',
+    squircleMd: '0.375rem',
+    squircleLg: '0.375rem',
 } as const;
 
 export const SHADOWS = {
     subtle: '0px 2px 6px rgba(12, 12, 12, 0.08)',
-    card: '0px 3px 13px rgba(12, 12, 12, 0.25)',
+    card: '0px 3px 13px rgba(12, 12, 12, 0.15)',
     floating: '0px 14px 30px rgba(12, 12, 12, 0.15)',
 } as const;
