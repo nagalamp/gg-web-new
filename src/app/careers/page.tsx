@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import {
     Briefcase,
@@ -14,33 +13,114 @@ import {
     Building,
     Mail,
     Sparkles,
-    CheckCircle,
+    Clock,
+    X,
+    BookOpen,
+    Megaphone,
+    ChevronRight,
 } from 'lucide-react';
+
+// ==========================================
+// TYPES & DATA STRUCTURES
+// ==========================================
+
+interface JobPosition {
+    id: string;
+    title: string;
+    department: string;
+    location: string;
+    duration: string;
+    type: string;
+    icon: React.ElementType;
+    about: string;
+    overview: string;
+    responsibilities: string[];
+    requirements: string[];
+    gains: string[];
+}
+
+const OPEN_POSITIONS: JobPosition[] = [
+    {
+        id: 'marketing-intern',
+        title: 'Marketing Intern',
+        department: 'Growth & Strategy',
+        location: 'Bengaluru / Remote / Hybrid',
+        duration: '3–6 Months',
+        type: 'Internship',
+        icon: Megaphone,
+        about: 'GaadiGuru is a mobility-focused startup working to simplify and improve local transportation through technology. We are building solutions that connect people and make everyday travel more convenient.',
+        overview: 'We are looking for an enthusiastic and creative Marketing Intern to join our growing team. This is an opportunity to work closely with an early-stage startup and contribute directly to brand awareness, customer growth, and marketing initiatives.',
+        responsibilities: [
+            'Assist in planning and executing marketing campaigns.',
+            'Support social media and digital marketing activities.',
+            'Conduct market, customer, and competitor research.',
+            'Identify opportunities to promote GaadiGuru and increase brand awareness.',
+            'Help create campaigns for customer and driver acquisition.',
+            'Assist with partnerships, community outreach, and promotional activities.',
+            'Track campaign performance and share insights with the team.',
+            'Bring new and creative ideas to help grow the brand.',
+        ],
+        requirements: [
+            'Currently pursuing or recently completed a degree in Marketing, Business, Management, or a related field.',
+            'Good communication and interpersonal skills.',
+            'Interest in startups, technology, mobility, and digital marketing.',
+            'Basic understanding of social media platforms and digital marketing.',
+            'Creative, proactive, and willing to learn.',
+            'Ability to work independently and as part of a small team.',
+        ],
+        gains: [
+            'Hands-on experience working with an early-stage startup.',
+            'Opportunity to contribute directly to real marketing and growth initiatives.',
+            'Exposure to startup strategy, branding, and customer acquisition.',
+            'Mentorship and learning opportunities.',
+            'Potential opportunity for a full-time role based on performance.',
+        ],
+    },
+    {
+        id: 'content-writer-intern',
+        title: 'Content Writer Intern',
+        department: 'Brand & Content',
+        location: 'Bengaluru / Remote / Hybrid',
+        duration: '3–6 Months',
+        type: 'Internship',
+        icon: BookOpen,
+        about: 'GaadiGuru is a mobility-focused startup building technology-driven solutions to make local transportation simpler, smarter, and more accessible.',
+        overview: 'We are looking for a creative and motivated Content Writer Intern to help shape the voice of GaadiGuru. You will create engaging content for social media, blogs, marketing campaigns, and other digital platforms.',
+        responsibilities: [
+            'Write engaging content for social media platforms.',
+            'Create captions, posts, promotional content, and campaign copy.',
+            'Research topics related to transportation, mobility, technology, and local news.',
+            'Write blogs, articles, announcements, and website content.',
+            'Help develop creative content ideas and storytelling strategies.',
+            'Work closely with the marketing and design teams.',
+            'Maintain a consistent brand voice across different platforms.',
+            'Assist in creating content in English and Kannada, where applicable.',
+        ],
+        requirements: [
+            'Strong writing and communication skills.',
+            'Good command of English; knowledge of Kannada is an added advantage.',
+            'Ability to research topics and create clear, engaging content.',
+            'Basic understanding of social media and digital content trends.',
+            'Creative mindset and attention to detail.',
+            'Interest in startups, technology, transportation, or digital media.',
+            'Students or recent graduates in Journalism, Communications, Marketing, English, or related fields are preferred.',
+        ],
+        gains: [
+            'Build a strong portfolio with real startup content.',
+            'Gain hands-on experience in content creation and digital marketing.',
+            'Work closely with an early-stage startup and contribute to its brand growth.',
+            'Learn about content strategy, social media, and startup marketing.',
+            'Potential opportunity for a full-time role based on performance.',
+        ],
+    },
+];
 
 // ==========================================
 // MAIN CAREERS PAGE COMPONENT
 // ==========================================
 
 export default function CareersPage(): React.ReactNode {
-    const [generalAppSubmitted, setGeneralAppSubmitted] = useState<boolean>(false);
-    const [applicantName, setApplicantName] = useState('');
-    const [applicantEmail, setApplicantEmail] = useState('');
-    const [applicantRole, setApplicantRole] = useState('');
-    const [resumeUrl, setResumeUrl] = useState('');
-
-    const handleGeneralSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (applicantName && applicantEmail) {
-            setGeneralAppSubmitted(true);
-            setTimeout(() => {
-                setGeneralAppSubmitted(false);
-                setApplicantName('');
-                setApplicantEmail('');
-                setApplicantRole('');
-                setResumeUrl('');
-            }, 3000);
-        }
-    };
+    const [selectedJob, setSelectedJob] = useState<JobPosition | null>(null);
 
     return (
         <main className="min-h-screen bg-[#F5F5F5] font-lexend text-[#0C0C0C] py-10 sm:py-16">
@@ -123,6 +203,75 @@ export default function CareersPage(): React.ReactNode {
                     </div>
                 </section>
 
+                {/* Active Openings Section */}
+                <section id="openings" className="space-y-8 scroll-mt-10">
+                    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                        <div className="space-y-2">
+                            <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#D90E17] uppercase tracking-wider">
+                                <Sparkles size={14} aria-hidden="true" />
+                                <span>Active Hiring</span>
+                            </div>
+                            <h2 className="font-outfit text-3xl sm:text-4xl font-bold text-[#0C0C0C]">Open Positions</h2>
+                            <p className="text-sm sm:text-base text-[#444444]">
+                                Kickstart your career with high-impact internship opportunities at GaadiGuru.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {OPEN_POSITIONS.map((job) => {
+                            const IconComponent = job.icon;
+                            return (
+                                <div
+                                    key={job.id}
+                                    className="bg-[#FEFEFE] border border-[#CCCCCC] rounded-md p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-sm hover:border-[#D90E17] transition-all"
+                                >
+                                    <div className="space-y-4">
+                                        <div className="flex items-start justify-between gap-4">
+                                            <div className="p-3 bg-[#FFD700] text-[#0C0C0C] rounded-md">
+                                                <IconComponent size={26} aria-hidden="true" />
+                                            </div>
+                                            <span className="px-3 py-1 rounded-md bg-[#F5F5F5] border border-[#E7E7E7] text-xs font-semibold text-[#0C0C0C]">
+                                                {job.type}
+                                            </span>
+                                        </div>
+
+                                        <div className="space-y-1">
+                                            <p className="text-xs font-medium text-[#D90E17] uppercase tracking-wider">{job.department}</p>
+                                            <h3 className="font-outfit text-2xl font-bold text-[#0C0C0C]">{job.title}</h3>
+                                        </div>
+
+                                        <div className="flex flex-wrap gap-4 text-xs font-medium text-[#444444] pt-1">
+                                            <div className="flex items-center gap-1.5">
+                                                <MapPin size={15} className="text-[#D90E17]" aria-hidden="true" />
+                                                <span>{job.location}</span>
+                                            </div>
+                                            <div className="flex items-center gap-1.5">
+                                                <Clock size={15} className="text-[#D90E17]" aria-hidden="true" />
+                                                <span>{job.duration}</span>
+                                            </div>
+                                        </div>
+
+                                        <p className="text-xs sm:text-sm text-[#444444] leading-relaxed line-clamp-3">
+                                            {job.overview}
+                                        </p>
+                                    </div>
+
+                                    <div className="pt-4 border-t border-[#E7E7E7] flex items-center justify-between">
+                                        <button
+                                            onClick={() => setSelectedJob(job)}
+                                            className="w-full px-5 py-2.5 rounded-md bg-[#FFD700] hover:bg-[#D90E17] text-[#0C0C0C] hover:text-[#FEFEFE] font-semibold text-sm transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#0C0C0C]"
+                                        >
+                                            <span>View Details</span>
+                                            <ChevronRight size={16} aria-hidden="true" />
+                                        </button>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </section>
+
                 {/* Office & Team Banner */}
                 <section className="bg-[#FEFEFE] rounded-md border border-[#CCCCCC] p-6 sm:p-10 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     <div className="lg:col-span-7 space-y-6">
@@ -161,111 +310,126 @@ export default function CareersPage(): React.ReactNode {
                     </div>
                 </section>
 
-                {/* Current Openings - Empty State Banner */}
-                <section id="openings" className="space-y-8 scroll-mt-10">
-                    <div className="space-y-2">
-                        <h2 className="font-outfit text-3xl font-bold text-[#0C0C0C]">Current Openings</h2>
-                        <p className="text-sm sm:text-base text-[#444444]">
-                            Join our core team in building the next generation of mobility infrastructure.
-                        </p>
-                    </div>
-
-                    {/* Empty State Callout Container */}
-                    <div className="bg-[#FEFEFE] rounded-md border border-[#CCCCCC] p-8 sm:p-12 text-center shadow-sm space-y-6 max-w-4xl mx-auto">
+                {/* Send Resume Section */}
+                <section className="space-y-8">
+                    <div className="bg-[#FEFEFE] rounded-md border border-[#CCCCCC] p-8 sm:p-12 shadow-sm space-y-6 max-w-4xl mx-auto text-center">
                         <div className="mx-auto w-14 h-14 rounded-md bg-[#FFD700] text-[#0C0C0C] flex items-center justify-center shadow-sm">
-                            <Sparkles size={30} aria-hidden="true" />
+                            <Mail size={30} aria-hidden="true" />
                         </div>
 
                         <div className="space-y-3 max-w-xl mx-auto">
                             <h3 className="font-outfit text-2xl sm:text-3xl font-bold text-[#0C0C0C]">
-                                We Are Currently Preparing New Roles!
+                                Interested in Joining Us?
                             </h3>
                             <p className="text-sm sm:text-base text-[#444444] leading-relaxed">
-                                We don&apos;t have any active job listings at this exact moment, but we are always eager to connect with extraordinary talent in engineering, product design, operations, and marketing.
+                                Send your resumes to{' '}
+                                <span className="font-bold text-[#D90E17]">
+                                    careers@gaadiguru.com
+                                </span>{' '}
+                                and we will get back to you!
                             </p>
-                        </div>
-
-                        <div className="pt-2 max-w-2xl mx-auto border-t border-[#E7E7E7]">
-                            {generalAppSubmitted ? (
-                                <div className="py-6 space-y-2 text-center">
-                                    <CheckCircle size={32} className="mx-auto text-[#D90E17]" aria-hidden="true" />
-                                    <h4 className="font-outfit font-bold text-lg text-[#0C0C0C]">Profile Submitted!</h4>
-                                    <p className="text-xs sm:text-sm text-[#444444]">
-                                        Thanks for reaching out! We&apos;ve stored your details and will get in touch as soon as a relevant opening arises.
-                                    </p>
-                                </div>
-                            ) : (
-                                <form onSubmit={handleGeneralSubmit} className="space-y-4 text-left pt-4">
-                                    <p className="text-xs font-semibold text-[#0C0C0C] text-center uppercase tracking-wider">
-                                        Send Us an Open Application
-                                    </p>
-
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div className="space-y-1">
-                                            <label className="text-xs font-medium text-[#0C0C0C] block">Full Name *</label>
-                                            <input
-                                                type="text"
-                                                required
-                                                value={applicantName}
-                                                onChange={(e) => setApplicantName(e.target.value)}
-                                                placeholder="e.g. Ananya Rao"
-                                                className="w-full px-3.5 py-2.5 rounded-md bg-[#F5F5F5] border border-[#E7E7E7] text-sm text-[#0C0C0C] focus:outline-none focus:ring-2 focus:ring-[#0C0C0C] focus:bg-[#FEFEFE]"
-                                            />
-                                        </div>
-
-                                        <div className="space-y-1">
-                                            <label className="text-xs font-medium text-[#0C0C0C] block">Email Address *</label>
-                                            <input
-                                                type="email"
-                                                required
-                                                value={applicantEmail}
-                                                onChange={(e) => setApplicantEmail(e.target.value)}
-                                                placeholder="e.g. ananya@example.com"
-                                                className="w-full px-3.5 py-2.5 rounded-md bg-[#F5F5F5] border border-[#E7E7E7] text-sm text-[#0C0C0C] focus:outline-none focus:ring-2 focus:ring-[#0C0C0C] focus:bg-[#FEFEFE]"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div className="space-y-1">
-                                            <label className="text-xs font-medium text-[#0C0C0C] block">Target Role / Domain</label>
-                                            <input
-                                                type="text"
-                                                value={applicantRole}
-                                                onChange={(e) => setApplicantRole(e.target.value)}
-                                                placeholder="e.g. Full-Stack / Operations Lead"
-                                                className="w-full px-3.5 py-2.5 rounded-md bg-[#F5F5F5] border border-[#E7E7E7] text-sm text-[#0C0C0C] focus:outline-none focus:ring-2 focus:ring-[#0C0C0C] focus:bg-[#FEFEFE]"
-                                            />
-                                        </div>
-
-                                        <div className="space-y-1">
-                                            <label className="text-xs font-medium text-[#0C0C0C] block">LinkedIn / Portfolio Link</label>
-                                            <input
-                                                type="url"
-                                                value={resumeUrl}
-                                                onChange={(e) => setResumeUrl(e.target.value)}
-                                                placeholder="https://linkedin.com/in/username"
-                                                className="w-full px-3.5 py-2.5 rounded-md bg-[#F5F5F5] border border-[#E7E7E7] text-sm text-[#0C0C0C] focus:outline-none focus:ring-2 focus:ring-[#0C0C0C] focus:bg-[#FEFEFE]"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="pt-2 text-center">
-                                        <button
-                                            type="submit"
-                                            className="w-full sm:w-auto px-8 py-3 rounded-md bg-[#FFD700] hover:bg-[#D90E17] text-[#0C0C0C] hover:text-[#FEFEFE] font-semibold text-sm transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0C0C0C] inline-flex items-center justify-center gap-2"
-                                        >
-                                            <Mail size={16} aria-hidden="true" />
-                                            <span>Submit Talent Profile</span>
-                                        </button>
-                                    </div>
-                                </form>
-                            )}
                         </div>
                     </div>
                 </section>
 
             </div>
+
+            {/* JOB DETAILS MODAL */}
+            {selectedJob && (
+                <div
+                    className="fixed inset-0 z-50 bg-[#0C0C0C]/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="modal-title"
+                >
+                    <div className="bg-[#FEFEFE] rounded-md border border-[#CCCCCC] w-full max-w-3xl my-8 p-6 sm:p-8 shadow-xl max-h-[90vh] overflow-y-auto space-y-6">
+
+                        {/* Modal Header */}
+                        <div className="flex items-start justify-between gap-4 pb-4 border-b border-[#E7E7E7]">
+                            <div>
+                                <span className="text-xs font-semibold text-[#D90E17] uppercase tracking-wider">
+                                    {selectedJob.department} • {selectedJob.type}
+                                </span>
+                                <h2 id="modal-title" className="font-outfit text-2xl sm:text-3xl font-bold text-[#0C0C0C]">
+                                    {selectedJob.title}
+                                </h2>
+                                <div className="flex flex-wrap gap-4 text-xs font-medium text-[#444444] pt-2">
+                                    <span className="flex items-center gap-1">
+                                        <MapPin size={14} className="text-[#D90E17]" aria-hidden="true" />
+                                        {selectedJob.location}
+                                    </span>
+                                    <span className="flex items-center gap-1">
+                                        <Clock size={14} className="text-[#D90E17]" aria-hidden="true" />
+                                        {selectedJob.duration}
+                                    </span>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => setSelectedJob(null)}
+                                className="p-2 rounded-md hover:bg-[#F5F5F5] text-[#0C0C0C] transition-colors"
+                                aria-label="Close Job Details Modal"
+                            >
+                                <X size={20} aria-hidden="true" />
+                            </button>
+                        </div>
+
+                        {/* Modal Content / Job Breakdown */}
+                        <div className="space-y-6 text-sm text-[#0C0C0C]">
+                            <div className="space-y-2">
+                                <h3 className="font-outfit font-bold text-base text-[#0C0C0C]">About GaadiGuru</h3>
+                                <p className="text-[#444444] leading-relaxed">{selectedJob.about}</p>
+                            </div>
+
+                            <div className="space-y-2">
+                                <h3 className="font-outfit font-bold text-base text-[#0C0C0C]">Role Overview</h3>
+                                <p className="text-[#444444] leading-relaxed">{selectedJob.overview}</p>
+                            </div>
+
+                            <div className="space-y-2">
+                                <h3 className="font-outfit font-bold text-base text-[#0C0C0C]">Key Responsibilities</h3>
+                                <ul className="space-y-1.5 list-disc list-inside text-[#444444]">
+                                    {selectedJob.responsibilities.map((resp, idx) => (
+                                        <li key={idx} className="leading-relaxed">{resp}</li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className="space-y-2">
+                                <h3 className="font-outfit font-bold text-base text-[#0C0C0C]">Requirements</h3>
+                                <ul className="space-y-1.5 list-disc list-inside text-[#444444]">
+                                    {selectedJob.requirements.map((req, idx) => (
+                                        <li key={idx} className="leading-relaxed">{req}</li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className="space-y-2">
+                                <h3 className="font-outfit font-bold text-base text-[#0C0C0C]">What You&apos;ll Gain</h3>
+                                <ul className="space-y-1.5 list-disc list-inside text-[#444444]">
+                                    {selectedJob.gains.map((gain, idx) => (
+                                        <li key={idx} className="leading-relaxed">{gain}</li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            {/* Direct Contact Footer */}
+                            <div className="pt-6 border-t border-[#E7E7E7]">
+                                <div className="bg-[#F5F5F5] p-6 rounded-md border border-[#E7E7E7] text-center space-y-2">
+                                    <h3 className="font-outfit font-bold text-lg text-[#0C0C0C]">
+                                        How to Apply
+                                    </h3>
+                                    <p className="text-xs sm:text-sm text-[#444444] leading-relaxed">
+                                        To apply for the <span className="font-semibold text-[#0C0C0C]">{selectedJob.title}</span> position, please send your resume and cover letter to{' '}
+                                        <span className="font-bold text-[#D90E17]">
+                                            careers@gaadiguru.com
+                                        </span>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     );
 }
