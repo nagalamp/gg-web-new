@@ -2,33 +2,18 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
-  Star,
   ArrowRight,
   CheckCircle2,
   ShieldCheck,
   Clock,
-  Car,
   Sparkles,
-  Zap,
-  ChevronRight,
+  Star,
+  MapPin,
 } from 'lucide-react';
 
-export const SERVICES_LIST: string[] = [
-  'EV CHARGE • On-Demand EV Charging',
-  'MAINTAIN • Garage & Service',
-  'CHAUFFEUR • Driver on Demand',
-  'ASSIST • 24/7 Roadside SOS',
-  'INSURANCE • Policy & Protection',
-  'PARTS • Spare Parts Market',
-  'MOVE • Urban Mobility',
-  'DELIVER • Express Parcel',
-  'LOGISTICS • Goods & Freight',
-  'OWN • Pre-Owned Marketplace',
-  'FINANCE • Loans & EMI Plans',
-];
-
-// STRICT BRAND COLOR TOKENS
+/* ==================== TYPES & CONFIGURATIONS ==================== */
 const COLORS = {
   primary: '#FFD700',
   primaryDark: '#D90E17',
@@ -44,274 +29,237 @@ const COLORS = {
   borderStrong: '#B6B6B6',
 } as const;
 
-export default function HeroSection(): React.ReactNode {
-  const [contactInput, setContactInput] = useState<string>('');
-  const [userRole, setUserRole] = useState<'rider' | 'driver' | 'garage'>('rider');
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+const STATS = [
+  { value: '11-in-1', label: 'Mobility Verticals' },
+  { value: '0%', label: 'Commission Model' },
+  { value: '20 Min', label: 'Avg SOS Response' },
+  { value: '100%', label: 'Verified Partners' },
+] as const;
 
-  // Extend with the first item to create a seamless infinite loop
-  const extendedServices = [...SERVICES_LIST, SERVICES_LIST[0]];
+/* ==================== HERO SECTION COMPONENT ==================== */
+export function HeroSection(): React.ReactNode {
+  return (
+    <section className="relative w-full min-h-[85vh] bg-[#F5F5F5] border-b border-[#CCCCCC] flex items-center justify-center overflow-hidden font-lexend text-[#0C0C0C]">
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/hero.png"
+          alt="GaadiGuru Hero Mobility Overview"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0C]/90 via-black/50 to-black/70 pointer-events-none" />
+      </div>
 
-  const handleSubscribe = (e: React.FormEvent) => {
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center py-20">
+        <span className="inline-flex items-center gap-2 bg-[#FFD700] text-[#0C0C0C] font-outfit font-extrabold text-xs sm:text-sm px-4 py-1.5 rounded-md uppercase tracking-widest mb-6">
+          <Sparkles size={14} className="text-[#0C0C0C]" />
+          ಗಾಡಿಗುರು • GaadiGuru Ecosystem
+        </span>
+        <h1 className="font-outfit text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight drop-shadow-md leading-[1.15]">
+          Mobility Doesn't End <br className="hidden sm:inline" />
+          When A <span className="text-[#FFD700]">Ride Ends.</span>
+        </h1>
+        <p className="mt-6 text-sm sm:text-base lg:text-lg text-[#B6B6B6] max-w-2xl font-normal leading-relaxed">
+          From rides and roadside assistance to multi-brand servicing, spare parts, and vehicle loans all synchronized under one intelligent ecosystem.
+        </p>
+
+        <div className="mt-8 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+          <a
+            href="#access"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#FFD700] hover:bg-[#D90E17] text-[#0C0C0C] hover:text-white font-outfit font-extrabold text-sm rounded-md transition-all duration-200"
+          >
+            <span>Request Priority Access</span>
+            <ArrowRight size={16} />
+          </a>
+          <Link
+            href="/services"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#FEFEFE]/10 hover:bg-[#FEFEFE]/20 text-white font-outfit font-bold text-sm rounded-md border border-white/20 backdrop-blur-md transition-all duration-200"
+          >
+            Explore Verticals
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ==================== STATS BAR COMPONENT ==================== */
+export function StatsBar(): React.ReactNode {
+  return (
+    <section className="w-full bg-[#FEFEFE] border-b border-[#CCCCCC] py-8 font-outfit">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {STATS.map((stat) => (
+            <div key={stat.label} className="p-4 bg-[#F5F5F5] rounded-md border border-[#E7E7E7]">
+              <p className="text-2xl sm:text-4xl font-extrabold text-[#D90E17]">{stat.value}</p>
+              <p className="text-xs sm:text-sm font-semibold text-[#444444] mt-1">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ==================== WHY GAADIGURU SECTION ==================== */
+export function WhyGaadiGuruSection(): React.ReactNode {
+  return (
+    <section id="why-us" className="w-full py-16 bg-[#FEFEFE] border-b border-[#CCCCCC] font-lexend text-[#0C0C0C]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-6">
+            <span className="inline-block text-xs font-bold text-[#D90E17] font-outfit uppercase tracking-wider bg-[#D90E17]/10 px-3 py-1 rounded-md border border-[#D90E17]/20 mb-3">
+              Fair & Transparent
+            </span>
+            <h2 className="font-outfit text-3xl sm:text-4xl font-extrabold text-[#0C0C0C] leading-tight mb-4">
+              Built for Drivers, Mechanics, and Everyday <span className="text-[#D90E17]">Commuters.</span>
+            </h2>
+            <p className="text-sm sm:text-base text-[#444444] mb-6 leading-relaxed">
+              Traditional aggregators take high commissions and fragment services. GaadiGuru connects riders directly with drivers, workshops, and rescue teams under a unified model.
+            </p>
+
+            <div className="space-y-3">
+              {[
+                'Zero Commission Driver Direct Model',
+                '24/7 Guaranteed Emergency Roadside Dispatch',
+                'Verified Multi-Brand Garages & Transparent Pricing',
+                'Single App for Urban Rides, Freight, and Servicing',
+              ].map((point) => (
+                <div key={point} className="flex items-center gap-3 p-3 bg-[#F5F5F5] rounded-md border border-[#E7E7E7]">
+                  <CheckCircle2 size={18} className="text-[#D90E17] shrink-0" />
+                  <span className="text-xs sm:text-sm font-semibold text-[#0C0C0C] font-outfit">{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-6 bg-[#F5F5F5] rounded-md border border-[#CCCCCC]">
+              <ShieldCheck size={28} className="text-[#D90E17] mb-3" />
+              <h3 className="font-outfit font-extrabold text-lg text-[#0C0C0C]">100% Safety Verified</h3>
+              <p className="text-xs text-[#444444] mt-2 leading-relaxed">
+                Background-checked drivers, certified workshop partners, and real-time live trip tracking.
+              </p>
+            </div>
+            <div className="p-6 bg-[#F5F5F5] rounded-md border border-[#CCCCCC]">
+              <Clock size={28} className="text-[#D90E17] mb-3" />
+              <h3 className="font-outfit font-extrabold text-lg text-[#0C0C0C]">20-Min SOS Network</h3>
+              <p className="text-xs text-[#444444] mt-2 leading-relaxed">
+                Rapid response roadside support for breakdowns, flat tires, and battery jumpstarts.
+              </p>
+            </div>
+            <div className="p-6 bg-[#F5F5F5] rounded-md border border-[#CCCCCC] sm:col-span-2">
+              <div className="flex items-center gap-2 mb-2">
+                <MapPin size={18} className="text-[#D90E17]" />
+                <h3 className="font-outfit font-extrabold text-lg text-[#0C0C0C]">Starting in Bengaluru</h3>
+              </div>
+              <p className="text-xs text-[#444444] leading-relaxed">
+                Launching operations locally across Bengaluru with complete compliance under Karnataka On-Demand Transportation Technology Aggregators Rules.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ==================== EARLY ACCESS SECTION ==================== */
+export function EarlyAccessSection(): React.ReactNode {
+  const [role, setRole] = useState<'rider' | 'driver' | 'garage'>('rider');
+  const [contact, setContact] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (contactInput.trim().length > 0) {
-      setIsSubscribed(true);
-      setContactInput('');
+    if (contact.trim().length > 0) {
+      setSubmitted(true);
+      setContact('');
     }
   };
 
   return (
-    <section className="relative w-full bg-[#F5F5F5] border-b border-[#CCCCCC] overflow-hidden py-12 lg:py-24 font-lexend text-[#0C0C0C]">
-      {/* Keyframe Styles for 11-Item Vertical Rotating Words */}
-      <style jsx global>{`
-        @keyframes verticalServiceRotate {
-          0%, 7% {
-            transform: translateY(0%);
-          }
-          9.09%, 16.09% {
-            transform: translateY(-8.333%);
-          }
-          18.18%, 25.18% {
-            transform: translateY(-16.666%);
-          }
-          27.27%, 34.27% {
-            transform: translateY(-25%);
-          }
-          36.36%, 43.36% {
-            transform: translateY(-33.333%);
-          }
-          45.45%, 52.45% {
-            transform: translateY(-41.666%);
-          }
-          54.54%, 61.54% {
-            transform: translateY(-50%);
-          }
-          63.63%, 70.63% {
-            transform: translateY(-58.333%);
-          }
-          72.72%, 79.72% {
-            transform: translateY(-66.666%);
-          }
-          81.81%, 88.81% {
-            transform: translateY(-75%);
-          }
-          90.90%, 97.90% {
-            transform: translateY(-83.333%);
-          }
-          100% {
-            transform: translateY(-91.666%);
-          }
-        }
+    <section id="access" className="w-full py-16 bg-[#F5F5F5] border-b border-[#CCCCCC] font-lexend text-[#0C0C0C]">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span className="inline-flex items-center gap-1.5 bg-[#FFD700] text-[#0C0C0C] font-outfit font-bold text-xs px-3 py-1 rounded-md uppercase tracking-wider mb-4">
+          <Star size={12} className="fill-[#0C0C0C]" /> Early Access
+        </span>
+        <h2 className="font-outfit text-3xl sm:text-4xl font-extrabold text-[#0C0C0C]">
+          Get Early Access To <span className="text-[#D90E17]">GaadiGuru</span>
+        </h2>
+        <p className="mt-2 text-sm text-[#444444] max-w-xl mx-auto">
+          Be among the first to experience zero-commission mobility, instant repairs, and 24/7 roadside assistance.
+        </p>
 
-        .animate-vertical-rotate {
-          animation: verticalServiceRotate 24s cubic-bezier(0.85, 0, 0.15, 1) infinite;
-        }
-      `}</style>
-
-      {/* Decorative Brand Glow & Grid Layers */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(#0C0C0C 1px, transparent 1px)', backgroundSize: '24px 24px' }}
-      />
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[550px] h-[550px] bg-[#FFD700]/15 rounded-md blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[350px] h-[350px] bg-[#D90E17]/10 rounded-md blur-3xl pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 font-lexend">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-
-          {/* LEFT COLUMN: Core Brand Messaging & Priority Access Form */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
-
-            {/* Regional Slogan Tag & Kannada Identity Badge */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-5">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#D90E17]/10 border border-[#D90E17]/20 rounded-md text-xs font-bold text-[#D90E17] font-outfit uppercase tracking-wider">
-                <Sparkles size={13} className="text-[#D90E17]" aria-hidden="true" />
-                Your Smarter Move
-              </span>
-              <span className="text-xs font-bold font-outfit text-[#0C0C0C] bg-[#FFD700] px-3 py-1 rounded-md shadow-xs border border-black/10">
-                ಗಾಡಿಗುರು
-              </span>
+        <div className="mt-8 bg-[#FEFEFE] border border-[#CCCCCC] p-6 sm:p-8 rounded-md shadow-sm text-left">
+          <div className="flex items-center justify-between border-b border-[#E7E7E7] pb-4 mb-6">
+            <span className="text-xs font-bold uppercase tracking-wider font-outfit text-[#0C0C0C]">Select Role</span>
+            <div className="flex gap-1 bg-[#F5F5F5] p-1 rounded-md border border-[#E7E7E7]">
+              {(['rider', 'driver', 'garage'] as const).map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  onClick={() => setRole(r)}
+                  className={`text-xs font-bold font-outfit px-3 py-1 rounded-md capitalize transition-all ${role === r ? 'bg-[#0C0C0C] text-[#FFD700]' : 'text-[#444444] hover:text-[#0C0C0C]'
+                    }`}
+                >
+                  {r}
+                </button>
+              ))}
             </div>
-
-            {/* Core Display Title */}
-            <h1 className="font-outfit text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0C0C0C] tracking-tight leading-[1.12] mb-5">
-              Mobility Doesn't End <br className="hidden sm:inline" />
-              When A <span style={{ color: COLORS.primaryDark }}>Ride Ends.</span>
-            </h1>
-
-            {/* Continuous Loop Vertical Rotating Text */}
-            <div className="mb-6 py-1 flex items-center">
-              <div className="text-lg sm:text-xl lg:text-2xl font-bold font-outfit text-[#0C0C0C] flex items-center space-x-2">
-                <span>Book your</span>
-                <div className="h-10 sm:h-11 overflow-hidden inline-block relative border-b-2 border-[#FFD700] bg-[#FEFEFE] px-2.5 rounded-md border border-[#E7E7E7]">
-                  <div className="flex flex-col transition-transform duration-500 animate-vertical-rotate">
-                    {extendedServices.map((service, index) => {
-                      const isEven = index % 2 === 0;
-                      return (
-                        <span
-                          key={`${service}-${index}`}
-                          className={`h-10 sm:h-11 flex items-center font-outfit font-semibold whitespace-nowrap text-sm sm:text-base ${isEven ? 'text-[#D90E17]' : 'text-[#0C0C0C]'
-                            }`}
-                        >
-                          {service}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Subtitle */}
-            <p className="text-[#444444] text-base sm:text-lg leading-relaxed font-normal mb-8 max-w-2xl font-lexend">
-              From daily rides and personal chauffeur services to workshop maintenance, spare parts, and 24/7 roadside emergency assistance—all integrated into one intelligent platform.
-            </p>
-
-            {/* Priority Access Subscription Container */}
-            <div className="w-full max-w-xl bg-[#FEFEFE] border border-[#CCCCCC] p-5 sm:p-6 rounded-md shadow-xl mb-8">
-              <div className="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-[#E7E7E7] pb-3">
-                <span className="text-xs font-bold text-[#0C0C0C] uppercase tracking-wider flex items-center gap-1.5 font-outfit">
-                  <Star size={14} className="text-[#D90E17] fill-[#D90E17]" aria-hidden="true" />
-                  Get Priority Launch Access
-                </span>
-
-                {/* Persona Switcher Buttons */}
-                <div className="flex gap-1.5 bg-[#F5F5F5] p-1 rounded-md border border-[#E7E7E7]">
-                  {(['rider', 'driver', 'garage'] as const).map((role) => (
-                    <button
-                      key={role}
-                      type="button"
-                      onClick={() => setUserRole(role)}
-                      className={`text-[11px] font-bold px-3 py-1 rounded-md capitalize transition-all duration-200 cursor-pointer font-outfit ${userRole === role
-                        ? 'bg-[#0C0C0C] text-[#FFD700] shadow-xs'
-                        : 'text-[#444444] hover:text-[#0C0C0C] hover:bg-white/60'
-                        }`}
-                      aria-label={`Select ${role} role registration`}
-                    >
-                      {role}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {isSubscribed ? (
-                <div className="flex items-center gap-3.5 bg-[#F5F5F5] text-[#0C0C0C] p-4 rounded-md border border-[#CCCCCC]">
-                  <CheckCircle2 className="w-6 h-6 text-[#D90E17] flex-shrink-0" aria-hidden="true" />
-                  <div>
-                    <p className="text-xs font-bold font-outfit">You are on the Priority Access List!</p>
-                    <p className="text-[11px] text-[#444444] font-lexend mt-0.5">
-                      We will reach out as soon as early access unlocks for your area.
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2.5">
-                  <input
-                    type="text"
-                    required
-                    value={contactInput}
-                    onChange={(e) => setContactInput(e.target.value)}
-                    placeholder={
-                      userRole === 'rider'
-                        ? 'Enter mobile number or email...'
-                        : userRole === 'driver'
-                          ? 'Enter mobile number to drive & earn...'
-                          : 'Enter garage name or phone...'
-                    }
-                    aria-label="Contact information for priority registration"
-                    className="flex-1 px-4 py-3 bg-[#F5F5F5] text-[#0C0C0C] placeholder-[#B6B6B6] text-xs font-lexend rounded-md border border-[#CCCCCC] focus:outline-none focus:ring-2 focus:ring-[#D90E17] focus:bg-white transition-all"
-                  />
-                  <button
-                    type="submit"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#FFD700] hover:bg-[#D90E17] text-[#0C0C0C] hover:text-white font-bold text-xs font-outfit rounded-md transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FFD700] flex-shrink-0 cursor-pointer active:scale-[0.98]"
-                  >
-                    <span>Request Access</span>
-                    <ArrowRight size={14} aria-hidden="true" />
-                  </button>
-                </form>
-              )}
-            </div>
-
-            {/* Feature Highlights Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
-              <div className="flex items-center gap-3 text-xs text-[#0C0C0C] font-semibold font-outfit bg-[#FEFEFE] p-3.5 rounded-md border border-[#E7E7E7] shadow-2xs hover:border-[#CCCCCC] transition-colors">
-                <div className="p-1.5 bg-[#D90E17]/10 rounded-md text-[#D90E17]">
-                  <Car size={16} aria-hidden="true" />
-                </div>
-                <span>11 Ecosystem Verticals</span>
-              </div>
-              <div className="flex items-center gap-3 text-xs text-[#0C0C0C] font-semibold font-outfit bg-[#FEFEFE] p-3.5 rounded-md border border-[#E7E7E7] shadow-2xs hover:border-[#CCCCCC] transition-colors">
-                <div className="p-1.5 bg-[#D90E17]/10 rounded-md text-[#D90E17]">
-                  <ShieldCheck size={16} aria-hidden="true" />
-                </div>
-                <span>Multi-Stream Driver Income</span>
-              </div>
-              <div className="flex items-center gap-3 text-xs text-[#0C0C0C] font-semibold font-outfit bg-[#FEFEFE] p-3.5 rounded-md border border-[#E7E7E7] shadow-2xs hover:border-[#CCCCCC] transition-colors">
-                <div className="p-1.5 bg-[#D90E17]/10 rounded-md text-[#D90E17]">
-                  <Clock size={16} aria-hidden="true" />
-                </div>
-                <span>24/7 Roadside SOS Network</span>
-              </div>
-            </div>
-
           </div>
 
-          {/* RIGHT COLUMN: Interactive Showcase Image Showcase */}
-          <div className="lg:col-span-5 relative w-full flex items-center justify-center">
-
-            {/* Feature Graphic Container */}
-            <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/5] rounded-md overflow-hidden border-2 border-[#CCCCCC] bg-[#0C0C0C] shadow-2xl group">
-              <Image
-                src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop"
-                alt="GaadiGuru unified automotive mobility ecosystem"
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 45vw"
-                className="object-cover object-center opacity-85 group-hover:scale-105 transition-transform duration-700 ease-out"
+          {submitted ? (
+            <div className="flex items-center gap-3 bg-[#F5F5F5] p-4 rounded-md border border-[#CCCCCC]">
+              <CheckCircle2 className="w-6 h-6 text-[#D90E17] shrink-0" />
+              <div>
+                <p className="text-sm font-bold font-outfit text-[#0C0C0C]">Priority Access Requested!</p>
+                <p className="text-xs text-[#444444]">
+                  We will notify you on your mobile number or email as soon as early access opens in your area.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="text"
+                required
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+                placeholder={
+                  role === 'rider'
+                    ? 'Enter mobile number or email...'
+                    : role === 'driver'
+                      ? 'Enter phone number to drive & earn...'
+                      : 'Enter garage or workshop name...'
+                }
+                aria-label="Contact detail for priority access"
+                className="flex-1 px-4 py-3 bg-[#F5F5F5] text-[#0C0C0C] placeholder-[#B6B6B6] text-xs font-lexend rounded-md border border-[#CCCCCC] focus:outline-none focus:ring-2 focus:ring-[#D90E17]"
               />
-
-              {/* Gradient Vignette Shading Layer */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0C] via-transparent to-black/30 pointer-events-none" />
-
-              {/* Top Floating Badge */}
-              <div className="absolute top-4 left-4 bg-[#FEFEFE]/95 backdrop-blur-md border border-[#CCCCCC] p-3 rounded-md shadow-lg flex items-center gap-3">
-                <div className="p-2 bg-[#FFD700] rounded-md text-[#0C0C0C] font-bold">
-                  <Zap size={18} aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase font-bold text-[#444444] tracking-wider font-outfit">
-                    Aggregator Platform
-                  </p>
-                  <p className="text-xs font-bold text-[#0C0C0C] font-outfit">
-                    Bengaluru Central Hub
-                  </p>
-                </div>
-              </div>
-
-              {/* Bottom Floating Feature Card */}
-              <div className="absolute bottom-4 right-4 left-4 sm:left-auto bg-[#0C0C0C]/90 backdrop-blur-md border border-white/20 p-4.5 rounded-md shadow-2xl text-white max-w-sm">
-                <div className="flex items-center justify-between gap-4 mb-2">
-                  <span className="text-[10px] font-bold bg-[#D90E17] text-white px-2 py-0.5 rounded-md uppercase tracking-wider font-outfit">
-                    Platform Beta
-                  </span>
-                  <span className="text-[11px] text-[#FFD700] font-bold font-outfit flex items-center gap-1">
-                    Verified Partners <ChevronRight size={12} aria-hidden="true" />
-                  </span>
-                </div>
-                <p className="text-xs font-bold font-outfit text-white">
-                  On-Demand Chauffeurs & Digital Garages
-                </p>
-                <p className="text-[11px] text-[#B6B6B6] mt-1 font-lexend leading-normal">
-                  Hire verified drivers for private cars or schedule workshop service in one click.
-                </p>
-              </div>
-
-            </div>
-
-          </div>
-
+              <button
+                type="submit"
+                className="px-6 py-3 bg-[#FFD700] hover:bg-[#D90E17] text-[#0C0C0C] hover:text-white font-outfit font-extrabold text-xs uppercase tracking-wider rounded-md transition-all shadow-sm shrink-0"
+              >
+                Join Waitlist
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </section>
+  );
+}
+
+/* ==================== MAIN PAGE COMPOSITION ==================== */
+export default function LandingPage(): React.ReactNode {
+  return (
+    <main className="min-h-screen bg-[#F5F5F5] text-[#0C0C0C] font-lexend">
+      <HeroSection />
+      <StatsBar />
+      <WhyGaadiGuruSection />
+      <EarlyAccessSection />
+    </main>
   );
 }
