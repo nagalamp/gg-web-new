@@ -93,7 +93,7 @@ const SERVICES_SHOWCASE: ServiceItem[] = [
         category: 'Vehicle Protection',
         icon: FileText,
         status: 'In Development',
-        description: 'Instant motor insurance procurement, zero-deductible policy renewals, cashless claim processing, and roadside protection add-ons[cite: 1].',
+        description: 'Instant motor insurance procurement, zero-deductible policy renewals, cashless claim processing, and roadside protection add-ons.',
         features: ['Instant Policy Renewal', 'Cashless Claims', 'Zero Depreciation', 'Add-on Protection']
     },
     {
@@ -103,7 +103,7 @@ const SERVICES_SHOWCASE: ServiceItem[] = [
         category: 'Marketplace',
         icon: Settings,
         status: 'In Development',
-        description: 'Direct access to OEM/OES spare parts, tires, batteries, and lubricants with scheduled workshop fitment options[cite: 1].',
+        description: 'Direct access to OEM/OES spare parts, tires, batteries, and lubricants with scheduled workshop fitment options.',
         features: ['OEM Components', 'Direct Delivery', 'Fitment Hubs', 'Part Finder']
     },
     {
@@ -113,7 +113,7 @@ const SERVICES_SHOWCASE: ServiceItem[] = [
         category: 'Rides & Transit',
         icon: Car,
         status: 'In Development',
-        description: 'On-demand urban commuter transit ranging from cabs and auto-rickshaws to outstation rentals and airport transfers[cite: 1].',
+        description: 'On-demand urban commuter transit ranging from cabs and auto-rickshaws to outstation rentals and airport transfers.',
         features: ['Route Planning', 'Verified Drivers', 'Intercity & Local', 'Airport Transfers']
     },
     {
@@ -123,7 +123,7 @@ const SERVICES_SHOWCASE: ServiceItem[] = [
         category: 'Hyper-Local',
         icon: Package,
         status: 'In Development',
-        description: 'Intra-city hyper-local courier dispatch for documents, packages, and essential goods utilizing our driver network[cite: 1].',
+        description: 'Intra-city hyper-local courier dispatch for documents, packages, and essential goods utilizing our driver network.',
         features: ['Real-time Dispatch', 'Multi-stop Delivery', 'OTP Handover', 'Express Delivery']
     },
     {
@@ -133,7 +133,7 @@ const SERVICES_SHOWCASE: ServiceItem[] = [
         category: 'Commercial Cargo',
         icon: Truck,
         status: 'In Development',
-        description: 'Mini-trucks, loaders, and commercial freight transport for business logistics, heavy cargo, and goods movement[cite: 1].',
+        description: 'Mini-trucks, loaders, and commercial freight transport for business logistics, heavy cargo, and goods movement.',
         features: ['3-Wheelers & Mini Trucks', 'High Capacity', 'Local & Cargo', 'Enterprise Billing']
     },
     {
@@ -143,7 +143,7 @@ const SERVICES_SHOWCASE: ServiceItem[] = [
         category: 'Buy & Sell',
         icon: Sparkles,
         status: 'In Development',
-        description: 'Buy and sell certified pre-owned commercial and personal vehicles with detailed inspection reports and transfer assistance[cite: 1].',
+        description: 'Buy and sell certified pre-owned commercial and personal vehicles with detailed inspection reports and transfer assistance.',
         features: ['Multi-Point Inspection', 'RC Transfer', 'Verified History', 'Direct Marketplace']
     },
     {
@@ -153,7 +153,7 @@ const SERVICES_SHOWCASE: ServiceItem[] = [
         category: 'Financial Care',
         icon: ShieldCheck,
         status: 'In Development',
-        description: 'Simplified vehicle loan pre-approvals, flexible EMI options, driver vehicle purchase financing, and extended warranty options[cite: 1].',
+        description: 'Simplified vehicle loan pre-approvals, flexible EMI options, driver vehicle purchase financing, and extended warranty options.',
         features: ['Instant Approval', 'Used Vehicle Loans', 'Driver Financing', 'Extended Warranty']
     }
 ];
@@ -179,13 +179,13 @@ export default function ServicePageClient(): React.ReactNode {
                         </h1>
 
                         <p className="text-[#444444] text-base sm:text-lg leading-relaxed font-normal">
-                            We are engineering a unified mobility platform designed to aggregate all your vehicle maintenance, EV charging, insurance, logistics, and transit requirements under a single digital hub[cite: 1].
+                            We are engineering a unified mobility platform designed to aggregate all your vehicle maintenance, EV charging, insurance, logistics, and transit requirements under a single digital hub.
                         </p>
                     </div>
                 </div>
             </section>
 
-            {/* ==================== SERVICES GRID ==================== */}
+            {/* ==================== SERVICES ROWS LIST ==================== */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
                 {/* Section Header Bar */}
@@ -205,49 +205,48 @@ export default function ServicePageClient(): React.ReactNode {
                     </div>
                 </div>
 
-                {/* Showcase Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                {/* Showcase Rows Container */}
+                <div className="flex flex-col gap-4">
                     {SERVICES_SHOWCASE.map((item) => {
                         const IconComponent = item.icon;
                         return (
                             <div
                                 key={item.id}
-                                className="group bg-[#FEFEFE] border border-[#CCCCCC] rounded-md p-6 sm:p-7 flex flex-col justify-between transition-all duration-200 hover:border-[#B6B6B6] hover:shadow-md relative overflow-hidden"
+                                className="group bg-[#FEFEFE] border border-[#CCCCCC] rounded-md p-5 sm:p-6 transition-all duration-200 hover:border-[#B6B6B6] hover:shadow-md relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-6"
                             >
-                                {/* Accent Top Border Indicator */}
-                                <div className="absolute top-0 left-0 right-0 h-1 bg-[#F5F5F5] group-hover:bg-[#FFD700] transition-colors" />
+                                {/* Accent Left Border Indicator */}
+                                <div className="absolute top-0 bottom-0 left-0 w-1 bg-[#F5F5F5] group-hover:bg-[#FFD700] transition-colors" />
 
-                                <div>
-                                    {/* Icon & Badge Row */}
-                                    <div className="flex items-center justify-between mb-6">
-                                        <div className="p-3 bg-[#FFD700] text-[#0C0C0C] rounded-md shadow-xs transition-transform group-hover:scale-105">
-                                            <IconComponent size={24} />
-                                        </div>
-                                        <span className="text-[10px] font-bold bg-[#F5F5F5] text-[#D90E17] border border-[#CCCCCC] px-2.5 py-1 rounded-md uppercase tracking-wider">
-                                            {item.status}
-                                        </span>
+                                {/* Left Section: Icon, Title & Category */}
+                                <div className="flex items-start sm:items-center gap-4 lg:w-1/4 shrink-0 pl-2">
+                                    <div className="p-3 bg-[#FFD700] text-[#0C0C0C] rounded-md shadow-xs transition-transform group-hover:scale-105 shrink-0">
+                                        <IconComponent size={24} />
                                     </div>
-
-                                    {/* Header Title Block */}
-                                    <div className="mb-3">
-                                        <h3 className="font-outfit font-extrabold text-xl text-[#0C0C0C] tracking-tight">
-                                            {item.title}
-                                        </h3>
-                                        <p className="font-outfit font-medium text-xs text-[#D90E17] uppercase tracking-wide mt-0.5">
+                                    <div>
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <h3 className="font-outfit font-extrabold text-lg text-[#0C0C0C] tracking-tight">
+                                                {item.title}
+                                            </h3>
+                                            <span className="text-[10px] font-bold bg-[#F5F5F5] text-[#D90E17] border border-[#CCCCCC] px-2 py-0.5 rounded-md uppercase tracking-wider lg:hidden">
+                                                {item.status}
+                                            </span>
+                                        </div>
+                                        <p className="font-outfit font-medium text-xs text-[#D90E17] uppercase tracking-wide">
                                             {item.subtitle}
                                         </p>
                                     </div>
+                                </div>
 
-                                    <p className="text-xs text-[#444444] leading-relaxed mb-6 font-normal">
+                                {/* Center Section: Description & Badges */}
+                                <div className="lg:w-2/4 flex flex-col justify-center gap-3">
+                                    <p className="text-xs text-[#444444] leading-relaxed font-normal">
                                         {item.description}
                                     </p>
-
-                                    {/* Badges / Micro Tags */}
-                                    <div className="flex flex-wrap gap-1.5 mb-8">
+                                    <div className="flex flex-wrap gap-1.5">
                                         {item.features.map((feat, idx) => (
                                             <span
                                                 key={idx}
-                                                className="bg-[#F5F5F5] border border-[#E7E7E7] text-[#0C0C0C] text-[11px] px-2.5 py-1 rounded-md font-medium"
+                                                className="bg-[#F5F5F5] border border-[#E7E7E7] text-[#0C0C0C] text-[11px] px-2.5 py-0.5 rounded-md font-medium"
                                             >
                                                 {feat}
                                             </span>
@@ -255,21 +254,27 @@ export default function ServicePageClient(): React.ReactNode {
                                     </div>
                                 </div>
 
-                                {/* Footer Action Strip */}
-                                <div className="pt-4 border-t border-[#E7E7E7] flex items-center justify-between">
-                                    <span className="text-xs text-[#B6B6B6] font-medium flex items-center gap-1.5">
-                                        <Lock size={13} />
-                                        <span>Unavailable</span>
+                                {/* Right Section: Status Badge & CTA Button */}
+                                <div className="lg:w-1/4 flex items-center justify-between lg:justify-end gap-4 pt-4 lg:pt-0 border-t lg:border-t-0 border-[#E7E7E7]">
+                                    <span className="hidden lg:inline-block text-[10px] font-bold bg-[#F5F5F5] text-[#D90E17] border border-[#CCCCCC] px-2.5 py-1 rounded-md uppercase tracking-wider shrink-0">
+                                        {item.status}
                                     </span>
 
-                                    <button
-                                        type="button"
-                                        disabled
-                                        aria-label={`${item.title} currently unavailable`}
-                                        className="px-4 py-2 bg-[#F5F5F5] text-[#B6B6B6] font-bold text-xs rounded-md border border-[#CCCCCC] cursor-not-allowed uppercase tracking-wider"
-                                    >
-                                        Coming Soon
-                                    </button>
+                                    <div className="flex items-center gap-3 w-full lg:w-auto justify-between lg:justify-end">
+                                        <span className="text-xs text-[#B6B6B6] font-medium flex items-center gap-1.5">
+                                            <Lock size={13} />
+                                            <span className="hidden sm:inline">Unavailable</span>
+                                        </span>
+
+                                        <button
+                                            type="button"
+                                            disabled
+                                            aria-label={`${item.title} currently unavailable`}
+                                            className="px-4 py-2 bg-[#F5F5F5] text-[#B6B6B6] font-bold text-xs rounded-md border border-[#CCCCCC] cursor-not-allowed uppercase tracking-wider shrink-0"
+                                        >
+                                            Coming Soon
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         );
